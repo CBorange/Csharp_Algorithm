@@ -1,5 +1,4 @@
 ﻿using System;
-using Algorithm.FoodFight;
 
 namespace Algorithm
 {
@@ -7,10 +6,10 @@ namespace Algorithm
     {
         static void Main(string[] args)
         {
-            Solution solution = new Solution();
+            MakeHamburger_Solution solution = new MakeHamburger_Solution();
 
-            int[] food = new int[] { 1, 3, 4, 6 };
-            string ret = solution.solution(food);
+            int[] ingredient = new int[] { 2, 1, 1, 2, 3, 1, 2, 3, 1 };
+            int ret = solution.solution(ingredient);
             Console.WriteLine(ret);
         }
     }

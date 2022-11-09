@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Algorithm.FoodFight
+namespace Algorithm
 {
-    public class Solution
+    /// <summary>
+    /// 프로그래머스 코테 LV.1 [푸드 파이트 대회] 솔루션
+    /// </summary>
+    public class FoodFight_Solution
     {
         private int _foodNo = 1;
         private StringBuilder _sb = new StringBuilder();
