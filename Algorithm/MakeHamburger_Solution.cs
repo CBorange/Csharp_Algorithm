@@ -11,7 +11,7 @@ namespace Algorithm
     /// </summary>
     public class MakeHamburger_Solution
     {
-        int _hamburgerCnt = 0;
+        private int _hamburgerCnt = 0;
         public int solution(int[] ingredient)
         {
             LinkedList<int> ingredientList = new LinkedList<int>(ingredient);
@@ -24,9 +24,18 @@ namespace Algorithm
             {
                 LinkedListNode<int> ingredientStart = null;
                 LinkedListNode<int> ingredientEnd = null;
+
+                // 현재 노드를 기준으로 뒤로 3칸 앞으로 3칸을 검사하여 햄버거를 만들 수 있는지 확인하고
+                // 햄버거를 만들 수 있으면 햄버거를 만들고 사용한 재료를 리스트에서 제외하고 햄버거 개수를 추가한다.
                 if (Verify_CanMakeBurgerNearBy(cursor, out ingredientStart, out ingredientEnd))
                 {
-
+                    LinkedListNode<int> deleteCursor = ingredientStart;
+                    while ((deleteCursor != ingredientEnd.Next) || (deleteCursor == null))
+                    {
+                        ingredientList.Remove(deleteCursor);
+                        deleteCursor = deleteCursor.Next;
+                    }
+                    _hamburgerCnt++;
                 }
                 cursor = cursor.Next;
             }
@@ -56,7 +65,7 @@ namespace Algorithm
                     break;
             }
 
-            // 1-2. 앞으로 커서를 이동시키면서 curNode(기준 노드) 까지 재료를 캐싱한다.
+            // 1-2. 뒤로 이동한 커서 위치에서 앞으로 커서를 이동시키면서 curNode(기준 노드) 까지 재료를 캐싱한다.
             while (cursor != curNode)
                 cachedIngredients.Add(cursor);
             cachedIngredients.Add(cursor);    // curNode 재료 저장(이 시점에서는 cursor와 curNode가 동일하다. while 조건 참조)
@@ -85,13 +94,14 @@ namespace Algorithm
             ingredientEnd = ingredientStart;
             foreach (LinkedListNode<int> target in cachedIngredients)
             {
-                if (answers[matchCnt] == target.Value)
+                if (answers[matchIndex] == target.Value)
                 {
                     matchCnt++;
                     matchIndex++;
                     if (matchCnt == 4)
                     {
                         // 부합한다면 재료 시작->끝 Node 반환하고 종료
+                        return true;
                     }
                 }
                 else
@@ -103,6 +113,7 @@ namespace Algorithm
 
             // 햄버거 생성 조건 검사에서 모든 캐싱재료리스트를 순회했음에도
             // 생성할 수 있는 조건이 충족되지 않았다면 생성불가상태로 return
+            return false;
         }
     }
 }
