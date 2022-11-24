@@ -61,7 +61,7 @@ namespace Algorithm
             // 앞 : -> 방향, 뒤 : <- 방향 의미
             // 1. 뒤로 최대 3칸의 재료 캐싱(Previous 방향)
             // 1-1. 최대 3칸 커서를 뒤로 이동시킨다.
-            for (int i = 0; i < 3; ++i) 
+            for ( int i = 0; i < 3; ++i ) 
             {
                 if (cursor.Previous != null)
                     cursor = cursor.Previous;
@@ -99,6 +99,7 @@ namespace Algorithm
 
             ingredientStart = cachedIngredients.First();
             ingredientEnd = null;
+            //LinkedListNode<int> target = cachedIngredients.First();
             foreach (LinkedListNode<int> target in cachedIngredients)
             {
                 if (answers[matchIndex] == target.Value)
@@ -116,8 +117,15 @@ namespace Algorithm
                 {
                     matchIndex = 0;
                     matchCnt = 0;
+
+                    // 이전 재료와는 연속으로 이어지지 않지만, 현재 target 재료가 재료배열의 첫번째 배열 요소와 동일한경우
+                    if (target.Value == answers[0])
+                    {
+                        matchIndex = 1;
+                        matchCnt = 1;
+                    }
                     ingredientStart = target; // 재료 위치 초기화(지금 target이 재료 배열에 부합하지 않으므로 여기서부터 다시 시작)
-                    ingredientEnd = ingredientStart;    
+                    ingredientEnd = ingredientStart;
                 }
             }
 
