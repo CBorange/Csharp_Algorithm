@@ -6,11 +6,16 @@ namespace Algorithm
     {
         static void Main(string[] args)
         {
-            MakeHamburger_Solution solution = new MakeHamburger_Solution();
+            KAKAO_ReportMail reportMail = new KAKAO_ReportMail();
 
-            //int[] ingredient = new int[] { 2, 1, 1, 2, 3, 1, 2, 3, 1 };
-            int[] ingredient = new int[] { 1, 3, 2, 1, 2, 1, 3, 1, 2 };
-            int ret = solution.solution(ingredient);
+            // param
+            string[] id_list = { "muzi", "frodo", "apeach", "neo"};
+            string[] report = { "muzi frodo", "apeach frodo", "frodo neo", "muzi neo", "apeach muzi" };
+            int k = 2;
+
+            // ret
+            int[] ret = reportMail.solution(id_list, report, k);
+
             Console.WriteLine(ret);
         }
     }
