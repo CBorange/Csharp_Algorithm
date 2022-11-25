@@ -31,14 +31,24 @@ namespace Algorithm
                 if (Verify_CanMakeBurgerNearBy(cursor, out ingredientStart, out ingredientEnd))
                 {
                     LinkedListNode<int> deleteCursor = ingredientStart;
-                    while ((deleteCursor != null) && (deleteCursor != ingredientEnd.Next))
+                    while ((deleteCursor != null))
                     {
+                        // deleteCursor를 List에서 제거하는 순간 앞/뒤 링크가 깨지므로 다음 Delete Node를 미리 캐싱
+                        LinkedListNode<int> nextDel = deleteCursor.Next;
                         ingredientList.Remove(deleteCursor);
-                        deleteCursor = deleteCursor.Next;
+                        deleteCursor = nextDel;
+
+                        if (deleteCursor == ingredientEnd)
+                        {
+                            cursor = deleteCursor.Next;
+                            ingredientList.Remove(deleteCursor);    // deleteCursor가 마지막 재료면 삭제하고 break
+                            break;
+                        }
                     }
                     _hamburgerCnt++;
                 }
-                cursor = cursor.Next;
+                else
+                    cursor = cursor.Next;
             }
 
             return _hamburgerCnt;
@@ -106,6 +116,9 @@ namespace Algorithm
                 {
                     matchCnt++;
                     matchIndex++;
+                    if (matchCnt == 1)  // 첫번째 재료라면 Start에 캐싱
+                        ingredientStart = target;
+
                     ingredientEnd = target;
                     if (matchCnt == 4)
                     {
@@ -123,9 +136,9 @@ namespace Algorithm
                     {
                         matchIndex = 1;
                         matchCnt = 1;
+                        ingredientStart = target; // 재료 위치 초기화(지금 target이 재료 배열에 부합하지 않으므로 여기서부터 다시 시작)
+                        ingredientEnd = ingredientStart;
                     }
-                    ingredientStart = target; // 재료 위치 초기화(지금 target이 재료 배열에 부합하지 않으므로 여기서부터 다시 시작)
-                    ingredientEnd = ingredientStart;
                 }
             }
 
